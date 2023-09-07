@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-info">Tambah Riwayat Pasien</h6>
+            <h6 class="m-0 font-weight-bold text-info">Detail Riwayat Pasien</h6>
         </div>
         <!-- Card Body -->
         <div class="card-body">
@@ -17,7 +17,7 @@
                 <form method="POST" action="<?= base_url(); ?>Pelayanan/save/<?= $detail['id_pelayanan']; ?>">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Keluhan</label>
-                        <textarea type="textarea" name="keluhan" class="form-control" id="keluhan"></textarea>
+                        <textarea type="textarea" name="keluhan" class="form-control" id="keluhan" placeholder="<?= $detail['keluhan']; ?>" readonly></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Diagnosa</label>

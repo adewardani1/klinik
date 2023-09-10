@@ -36,7 +36,7 @@ class Pegawai extends BaseController
         return view('pages/pegawai/view', $data);
     }
 
-    public function add()
+    public function tambah()
     {
         $data = [
             'title' => "Dashboard",
@@ -44,6 +44,7 @@ class Pegawai extends BaseController
 
         return view('pages/pegawai/add', $data);
     }
+
 
     public function edit_admin($id)
     {
@@ -64,7 +65,6 @@ class Pegawai extends BaseController
 
         return view('/pages/riwayat/index', $data);
     }
-
 
     public function hapus_pemeriksa($id)
     {

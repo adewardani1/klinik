@@ -61,25 +61,44 @@ class RekamMedis  extends BaseController
         return redirect()->to('RekamMedis/index');
     }
 
-    public function delete_rm($id_rm)
-    {
-
-        $this->pelayananModel->where('id_rm', $id_rm)->delete();
-        $this->rekamModel->delete($id_rm);
-
-        return redirect()->to('RekamMedis/index');
-    }
-
     public function riwayat($id_rm)
     {
+        $data_list_riwayat = [];
+        $list_riwayat = $this->riwayatModel->where(['id_rm' => $id_rm])->findAll();
+
+        foreach ($list_riwayat as $riwayat) {
+            $nama_obat = [];
+            $id_obat = $riwayat['id_obat'];
+            $obat = $this->obatModel->find($id_obat);
+            if ($obat) {
+                $nama_obat[] = $obat['nama_obat'];
+            } else {
+                $nama_obat[] = 'Obat Tidak Ditemukan';
+            }
+
+            // Gabungkan semua nama obat untuk riwayat saat ini menjadi satu string
+            $nama_obat_str = implode(', ', $nama_obat);
+
+            // Masukkan data riwayat beserta nama obat ke dalam array
+            $data_list_riwayat[] = [
+                'id_riwayat' => $riwayat['id_riwayat'],
+                'keluhan' => $riwayat['keluhan'],
+                'diagnosa' => $riwayat['diagnosa'],
+                'nama_obat' => $nama_obat_str,
+                'keterangan' => $riwayat['keterangan'],
+            ];
+        }
+
         $data = [
             'title' => 'Detail Jalan',
-            'list_riwayat' => $this->riwayatModel->where(['id_rm' => $id_rm])->findAll(),
+            'list_riwayat' => $data_list_riwayat,
             'detail_riwayat' => $this->rekamModel->where(['id_rm' => $id_rm])->first(),
         ];
 
         return view('/pages/riwayat/index', $data);
     }
+
+
 
 
     public function add_riwayat($id_rm)
@@ -112,14 +131,31 @@ class RekamMedis  extends BaseController
             'keluhan' => $this->request->getVar('keluhan'),
             'diagnosa' => $this->request->getVar('diagnosa'),
             'id_obat' => $id_obat,
+            'keterangan' => $this->request->getVar('keterangan'),
         ]);
 
-        $data = [
-            'title' => 'Detail Pelaporan',
-            'list_riwayat' => $this->riwayatModel->findAll($id_rm),
-            'detail_riwayat' => $this->rekamModel->where(['id_rm' => $id_rm])->first(),
-        ];
+        $riwayat = $this->riwayatModel->where('id_rm', $id_rm)->first();
+        $id_rm = $riwayat['id_rm'];
+        return redirect()->to('RekamMedis/riwayat/' . $id_rm);
+    }
 
-        return view('pages/riwayat/index', $data);
+    public function delete_rm($id_rm)
+    {
+
+        $this->pelayananModel->where('id_rm', $id_rm)->delete();
+        $this->rekamModel->delete($id_rm);
+
+        return redirect()->to('RekamMedis/index');
+    }
+
+    public function delete_riwayat($id_riwayat)
+    {
+
+        $riwayat = $this->riwayatModel->where('id_riwayat', $id_riwayat)->first();
+        $id_rm = $riwayat['id_rm'];
+
+        $this->riwayatModel->where('id_riwayat', $id_riwayat)->delete();
+
+        return redirect()->to('RekamMedis/riwayat/' . $id_rm);
     }
 }

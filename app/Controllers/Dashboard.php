@@ -8,10 +8,11 @@ use App\Models\PelayananModel;
 use App\Models\ObatModel;
 use App\Models\PemeriksaModel;
 use App\Models\JadwalModel;
+use App\Models\PengeluaranModel;
 
 class Dashboard extends BaseController
 {
-    protected $rekamModel, $riwayatModel, $pelayananModel, $obatModel, $pemeriksaModel, $jadwalModel;
+    protected $rekamModel, $riwayatModel, $pelayananModel, $obatModel, $pemeriksaModel, $jadwalModel, $pengeluaranModel;
 
     public function __construct()
     {
@@ -21,10 +22,13 @@ class Dashboard extends BaseController
         $this->obatModel = new ObatModel();
         $this->pemeriksaModel = new PemeriksaModel();
         $this->jadwalModel = new JadwalModel();
+        $this->pengeluaranModel = new PengeluaranModel();
     }
 
     public function index()
     {
+
+        $ambilPasienHariIni =  $this->riwayatModel->ambilPasienHariIni();
         $ambilPemeriksa = $this->pemeriksaModel->findAll();
         $ambilJadwal =  $this->jadwalModel->findAll();
 
@@ -34,40 +38,33 @@ class Dashboard extends BaseController
             $data_jadwal[$jadwal_item['id_pegawai']][$jadwal_item['hari']] = $jadwal_item['jam'];
         }
 
+        // Mengambil semua data
+        $ambilRiwayat = $this->riwayatModel->findAll();
+        $ambilPengeluaran = $this->pengeluaranModel->findAll();
+
+        // Menghitung total biaya
+        $totalBiaya = 0;
+        foreach ($ambilRiwayat as $riwayat) {
+            $totalBiaya += $riwayat['biaya'];
+        }
+
+        $totalPengeluaran = 0;
+        foreach ($ambilPengeluaran as $pengeluaran) {
+            $totalPengeluaran += $pengeluaran['jumlah'];
+        }
+
+        $keuntungan = $totalBiaya - $totalPengeluaran;
+
         $data = [
             'title' => "Dashboard",
             'data_pegawai' => $ambilPemeriksa,
             'jadwal' => $data_jadwal,
+            'jumlah_pasien' => $ambilPasienHariIni,
+            'penghasilan' => $keuntungan,
         ];
 
         return view('dashboard', $data);
     }
-
-
-
-    // public function simpan_jadwal()
-    // {
-    //     $request = \Config\Services::request();
-
-    //     if ($request->getMethod() == 'post') {
-    //         $pegawai_id = $request->getPost('pegawai_id');
-    //         $hari = $request->getPost('hari');
-    //         $shift = $request->getPost('shift'); // Ambil nilai shift
-
-    //         // Lakukan validasi jika diperlukan
-
-    //         $data = [
-    //             'id_pegawai' => $pegawai_id,
-    //             'hari' => $hari,
-    //             'jam' => $shift,
-    //         ];
-
-    //         $this->jadwalModel->insert($data);
-
-    //         // Return respons jika diperlukan
-    //         return $this->response->setJSON(['message' => 'Data tersimpan']);
-    //     }
-    // }
 
     public function simpan_jadwal()
     {

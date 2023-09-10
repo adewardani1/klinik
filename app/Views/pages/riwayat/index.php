@@ -38,7 +38,6 @@
                             <label>: <?= $detail_riwayat['alamat']; ?></label>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="col-md-6 border-0">
@@ -75,41 +74,51 @@
             </div>
         </div>
 
-
-        <div class="d-flex justify-content-end">
-            <a href="<?= base_url(); ?>RekamMedis/add_riwayat/<?= $detail_riwayat['id_rm']; ?>">
-                <button class="btn btn-danger">Tambah Riwayat Medis</button>
-            </a>
-        </div>
-        <div class="table-responsive service">
-            <table class="table table-bordered table-hover mt-3 text-nowrap css-serial">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Keluhan</th>
-                        <th scope="col">Diagnosa</th>
-                        <th scope="col">Obat</th>
-                        <th scope="col">Keterangan</th>
-                        <th scope="col">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $no = 1;
-                    foreach ($list_riwayat as $list) : ?>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="d-flex justify-content-end">
+                <a href="<?= base_url(); ?>RekamMedis/add_riwayat/<?= $detail_riwayat['id_rm']; ?>">
+                    <button class="btn btn-danger">Tambah Riwayat Medis</button>
+                </a>
+            </div>
+            <div class="table-responsive service">
+                <table class="table table-bordered table-hover mt-3 text-nowrap css-serial">
+                    <thead>
                         <tr>
-                            <td scope="col"><?= $no ?></td>
-                            <td scope="col"><?= $list['keluhan'] ?></td>
-                            <td scope="col"><?= $list['diagnosa'] ?></td>
-                            <td scope="col"><?= $list['id_obat'] ?></td>
-                            <td scope="col"></td>
-                            <td scope="col"></td>
+                            <th scope="col">No</th>
+                            <th scope="col">Keluhan</th>
+                            <th scope="col">Diagnosa</th>
+                            <th scope="col">Obat</th>
+                            <th scope="col">Keterangan</th>
+                            <th scope="col">Aksi</th>
                         </tr>
-                    <?php
-                        $no++;
-                    endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $no = 1;
+                        foreach ($list_riwayat as $list) : ?>
+                            <tr>
+                                <td scope="col"><?= $no ?></td>
+                                <td scope="col"><?= $list['keluhan'] ?></td>
+                                <td scope="col"><?= $list['diagnosa'] ?></td>
+                                <td scope="col"><?= $list['nama_obat'] ?></td>
+                                <td scope="col"><?= $list['keterangan'] ?></td>
+                                <td scope="col">
+                                    <form action="<?= base_url(); ?>RekamMedis/delete_riwayat/<?= $list['id_riwayat']; ?>" method="post" class="d-inline">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php
+                            $no++;
+                        endforeach;
+                        ?>
+                    </tbody>
+
+                </table>
+            </div>
         </div>
 
     </div>

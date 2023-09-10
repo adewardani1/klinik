@@ -41,8 +41,8 @@
                 </table>
             </div>
             <div class="py-3 justify-content-between">
-                <p class="m-0 font-weight-bold text-info">Umum :</p>
-                <p class="m-0 font-weight-bold text-info">BPJS :</p>
+                <p class="m-0 font-weight-bold text-info">UMUM : <?= $kategori_kunjungan['jumlah_non_bpjs']; ?></p>
+                <p class="m-0 font-weight-bold text-info">BPJS : <?= $kategori_kunjungan['jumlah_bpjs']; ?></p>
             </div>
         </div>
     </div>

@@ -63,12 +63,17 @@ class Laporan extends BaseController
             ->where('created_at <=', $endOfDay)
             ->findAll();
 
+        // Hitung jumlah pasien yang memiliki nomor BPJS
+        $jumlahPasienBPJS = $this->riwayatModel->hitungJumlahPasienBPJS();
+
         $data = [
             'data_kunjungan' => $ambilKunjungan,
+            'kategori_kunjungan' => $jumlahPasienBPJS,
         ];
 
         return view('pages/laporan/kunjungan', $data);
     }
+
 
     public function keuangan()
     {

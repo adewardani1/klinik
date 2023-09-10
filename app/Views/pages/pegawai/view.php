@@ -12,7 +12,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-end">
                 <a href="<?= base_url(); ?>RekamMedis/add_rm">
-                    <button class="btn btn-danger">Tambah Petugas +</button>
+                    <button class="btn btn-danger">Tambah Administasi</button>
                 </a>
             </div>
             <div class="table-responsive service">
@@ -63,6 +63,11 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
+            <div class="d-flex justify-content-end">
+                <a href="<?= base_url(); ?>RekamMedis/add_rm">
+                    <button class="btn btn-danger">Tambah Pemeriksa</button>
+                </a>
+            </div>
             <div class="table-responsive service">
                 <table class="table table-bordered table-hover  mt-3 text-nowrap css-serial">
                     <thead>

@@ -64,6 +64,8 @@ class Pelayanan extends BaseController
             'id_rm' => NULL,
             'nama' => $this->request->getVar('nama_pasien'),
             'no_bpjs' => $this->request->getVar('no_bpjs'),
+            'alamat' => $this->request->getVar('alamat'),
+            'tanggal_lahir' => $this->request->getVar('tanggal'),
         ];
 
         // Memasukkan data ke dalam tabel
@@ -76,8 +78,9 @@ class Pelayanan extends BaseController
         $data = [
             'id_rm' => $newIdRM,
             'nama_pasien' => $this->request->getVar('nama_pasien'),
-            'keluhan' => $this->request->getVar('keluhan'),
             'no_bpjs' => $this->request->getVar('no_bpjs'),
+            'keluhan' => $this->request->getVar('keluhan'),
+
         ];
 
         // Memasukkan data ke dalam tabel
@@ -126,6 +129,7 @@ class Pelayanan extends BaseController
             'diagnosa' => $this->request->getVar('diagnosa'),
             'id_obat' => $this->request->getVar('id_obat'),
             'biaya' => $this->request->getVar('biaya'),
+            'keterangan' => $this->request->getVar('keterangan'),
         ]);
 
         return redirect()->to('Pelayanan/index');
@@ -169,7 +173,7 @@ class Pelayanan extends BaseController
 
     public function confirm()
     {
-        // Ambil data pelayanan yang sudah dicoret (misalnya dengan menggunakan model)
+        // Ambil data pelayanan yang sudah dicoret
         $data_pelayanan_dicoret = $this->pelayananModel->getPelayananDicoret();
 
         // Loop melalui data pelayanan yang dicoret dan masukkan ke dalam detail riwayat
@@ -178,13 +182,15 @@ class Pelayanan extends BaseController
                 'id_rm' => $pelayanan['id_rm'],
                 'keluhan' => $pelayanan['keluhan'],
                 'diagnosa' => $pelayanan['diagnosa'],
+                'id_obat' => $pelayanan['id_obat'],
                 'biaya' => $pelayanan['biaya'],
+                'keterangan' => $pelayanan['keterangan'],
             ];
 
-            // Simpan data ke dalam detail riwayat (misalnya dengan menggunakan model)
+            // Simpan data ke dalam detail riwayat
             $this->riwayatModel->insert($data_detail_riwayat);
 
-            // Hapus data pelayanan yang sudah dicoret (misalnya dengan menggunakan model)
+            // Hapus data pelayanan yang sudah dicoret
             $this->pelayananModel->delete($pelayanan['id_pelayanan']);
         }
 

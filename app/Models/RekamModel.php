@@ -8,5 +8,5 @@ class RekamModel extends Model
 {
     protected $table      = 'rekam_medis';
     protected $primaryKey = 'id_rm';
-    protected $allowedFields = ['nama', 'alamat', 'id_rm', 'no_rm', 'no_bpjs',];
+    protected $allowedFields = ['nama', 'alamat', 'id_rm', 'no_rm', 'no_bpjs', 'alamat', 'tanggal_lahir'];
 }

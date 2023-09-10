@@ -10,14 +10,15 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <!-- <div class="d-flex justify-content-start">
-                <a href="export_kas.php" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm mt-1"><i class="fas fa-download fa-sm text-white-50"></i> Buat Laporan</a>
-            </div> -->
             <div class="table-responsive service">
                 <form method="POST" action="<?= base_url(); ?>Pelayanan/process_add">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Nama Pasien</label>
-                        <input type="text" name="nama_pasien" class="form-control" id="nama_pasien">
+                        <input type="text" name="nama_pasien" class="form-control" id="nama_pasien" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
+                        <input class="form-control" type="date" aria-label=".form-control-sm example" name='tanggal' id="tanggal" required>
                     </div>
                     <div class="mb-3">
                         <label for="jenis_pasien" class="form-label">Jenis Pasien</label>
@@ -32,11 +33,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                        <input type="text" name="alamat" class="form-control" id="alamat">
+                        <input type="text" name="alamat" class="form-control" id="alamat" required>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Keluhan</label>
-                        <textarea type="text" name="keluhan" class="form-control" id="keluhan"></textarea>
+                        <textarea type="text" name="keluhan" class="form-control" id="keluhan" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-info">Tambah</button>
                 </form>

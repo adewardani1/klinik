@@ -2,29 +2,23 @@
 
 namespace App\Controllers;
 
-use App\Models\RekamModel;
-use App\Models\RiwayatModel;
-use App\Models\PelayananModel;
 use App\Models\PengeluaranModel;
 
 class Pengeluaran extends BaseController
 {
-    protected $rekamModel, $riwayatModel, $pelayananModel, $pengeluaranModel;
+    protected $pengeluaranModel;
 
     public function __construct()
     {
-        $this->rekamModel = new RekamModel();
-        $this->riwayatModel = new RiwayatModel();
-        $this->pelayananModel = new PelayananModel();
         $this->pengeluaranModel = new PengeluaranModel();
     }
 
     public function index()
     {
-        $ambilPelayanan = $this->pelayananModel->findAll();
+        $ambilPengeluaran = $this->pengeluaranModel->findAll();
 
         $data = [
-            'data_pelayanan' => $ambilPelayanan,
+            'data_pengeluaran' => $ambilPengeluaran,
         ];
 
         return view('pages/pengeluaran/view', $data);
@@ -52,6 +46,39 @@ class Pengeluaran extends BaseController
         // Memasukkan data ke dalam tabel
         $this->pengeluaranModel->insert($data);
 
-        return view('pages/pengeluaran/add', $data);
+        return redirect()->to('Pengeluaran/index');
+    }
+
+    public function edit($id_pengeluaran)
+    {
+        $ambilPengeluaran = $this->pengeluaranModel->where('id_pengeluaran', $id_pengeluaran)->first();
+
+        $data = [
+            'detail_pengeluaran' => $ambilPengeluaran,
+        ];
+
+        return view('pages/pengeluaran/edit', $data);
+    }
+
+    public function process_edit($id_pengeluaran)
+    {
+
+        $dataToUpdatePelayanan = [
+            'nama' => $this->request->getVar('nama'),
+            'jumlah' => $this->request->getVar('jumlah'),
+            'tanggal' => $this->request->getVar('tanggal'),
+            'keterangan' => $this->request->getVar('keterangan'),
+        ];
+
+        $this->pengeluaranModel->update($id_pengeluaran, $dataToUpdatePelayanan);
+
+        return redirect()->to('Pengeluaran/index');
+    }
+
+    public function delete($id_pengeluaran)
+    {
+        $this->pengeluaranModel->where('id_pengeluaran', $id_pengeluaran)->delete();
+
+        return redirect()->to('Pengeluaran/index');
     }
 }

@@ -32,19 +32,21 @@
                     <tbody>
                         <?php
                         $no = 1;
-                        foreach ($data_pelayanan as $list) : ?>
+                        foreach ($data_pengeluaran as $list) : ?>
                             <tr>
                                 <td scope="col"><?= $no; ?></td>
-                                <td scope="col"><?= $list['nama_pasien'] ?></td>
-                                <td scope="col"></td>
-                                <td scope="col"></td>
+                                <td scope="col"><?= $list['tanggal'] ?></td>
+                                <td scope="col"><?= $list['nama'] ?></td>
+                                <td scope="col"><?= $list['jumlah'] ?></td>
                                 <td scope="col">
-                                    <a title="lihat" href="<?= base_url(); ?>pages/riwayat/<?= $list['id_rm']; ?>" style="display: inline;">
+                                    <a title="lihat" href="<?= base_url(); ?>Pengeluaran/edit/<?= $list['id_pengeluaran']; ?>" style="display: inline;">
                                         <button class="btn btn-warning btn-sm">Edit</button>
                                     </a>
-                                    <a title="lihat" href="<?= base_url(); ?>pages/riwayat/<?= $list['id_rm']; ?>" style="display: inline;">
-                                        <button class="btn btn-primary btn-sm">Riwayat</button>
-                                    </a>
+                                    <form action="<?= base_url(); ?>Pengeluaran/delete/<?= $list['id_pengeluaran']; ?>" method="post" class="d-inline">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Hapus</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php

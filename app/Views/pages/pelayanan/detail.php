@@ -17,23 +17,29 @@
                 <form method="POST" action="<?= base_url(); ?>Pelayanan/save/<?= $detail['id_pelayanan']; ?>">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Keluhan</label>
-                        <textarea type="textarea" name="keluhan" class="form-control" id="keluhan" placeholder="<?= $detail['keluhan']; ?>" readonly></textarea>
+                        <textarea name="keluhan" class="form-control" id="keluhan" required><?= $detail['keluhan']; ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Diagnosa</label>
-                        <input type="text" name="diagnosa" class="form-control" id="diagnosa">
+                        <input type="text" name="diagnosa" class="form-control" id="diagnosa" value="<?= $detail['diagnosa']; ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Obat</label>
-                        <input type="text" name="Obat" class="form-control" id="Obat">
+                        <label class="" for="inlineFormCustomSelect">Obat</label>
+                        <select class="custom-select" name="id_obat" id="inlineFormCustomSelect">
+                            <?php
+                            foreach ($data_obat as $list) : ?>
+                                <option value="<?= $list['id_obat'] ?>"><?= $list['nama_obat'] ?></option>
+                            <?php
+                            endforeach; ?>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Biaya</label>
-                        <input type="number" name="biaya" class="form-control" id="biaya">
+                        <input type="number" name="biaya" class="form-control" id="biaya" value="<?= $detail['biaya']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-                        <textarea type="textarea" name="keterangan" class="form-control" id="keterangan"></textarea>
+                        <textarea name="keterangan" class="form-control" id="keterangan" required><?= $detail['keterangan']; ?></textarea>
                     </div>
                     <button type="submit" class="btn btn-info">Simpan</button>
                 </form>

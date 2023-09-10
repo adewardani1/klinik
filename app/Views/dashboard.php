@@ -17,7 +17,7 @@
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                 Jumlah Pasien Hari Ini</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                <h2>10</h2>
+                                <h2><?= $jumlah_pasien; ?></h2>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -37,7 +37,7 @@
                                 Penghasilan
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                <h2>10</h2>
+                                <h2><?= $penghasilan; ?></h2>
                             </div>
                         </div>
                         <div class="col-auto">

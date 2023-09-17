@@ -2,17 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Models\AdminModel;
 use App\Models\RekamModel;
 use App\Models\RiwayatModel;
 use App\Models\PelayananModel;
 use App\Models\ObatModel;
-use App\Models\PemeriksaModel;
 use App\Models\JadwalModel;
 use App\Models\PengeluaranModel;
 
 class Dashboard extends BaseController
 {
-    protected $rekamModel, $riwayatModel, $pelayananModel, $obatModel, $pemeriksaModel, $jadwalModel, $pengeluaranModel;
+    protected $rekamModel, $riwayatModel, $pelayananModel, $obatModel, $adminModel, $jadwalModel, $pengeluaranModel;
 
     public function __construct()
     {
@@ -20,7 +20,7 @@ class Dashboard extends BaseController
         $this->riwayatModel = new RiwayatModel();
         $this->pelayananModel = new PelayananModel();
         $this->obatModel = new ObatModel();
-        $this->pemeriksaModel = new PemeriksaModel();
+        $this->adminModel = new AdminModel();
         $this->jadwalModel = new JadwalModel();
         $this->pengeluaranModel = new PengeluaranModel();
     }
@@ -29,7 +29,7 @@ class Dashboard extends BaseController
     {
 
         $ambilPasienHariIni =  $this->riwayatModel->ambilPasienHariIni();
-        $ambilPemeriksa = $this->pemeriksaModel->findAll();
+        $ambilPetugas = $this->adminModel->findAll();
         $ambilJadwal =  $this->jadwalModel->findAll();
 
         $data_jadwal = []; // Set nilai default berupa array kosong
@@ -57,7 +57,7 @@ class Dashboard extends BaseController
 
         $data = [
             'title' => "Dashboard",
-            'data_pegawai' => $ambilPemeriksa,
+            'data_pegawai' => $ambilPetugas,
             'jadwal' => $data_jadwal,
             'jumlah_pasien' => $ambilPasienHariIni,
             'penghasilan' => $keuntungan,

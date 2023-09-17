@@ -45,6 +45,21 @@ class Pegawai extends BaseController
         return view('pages/pegawai/add', $data);
     }
 
+    public function proses_tambah()
+    {
+        // Data yang akan diinsert ke dalam database
+        $dataPegawai = [
+            'nama' => $this->request->getVar('nama_pegawai'),
+            'hak_akses' => $this->request->getVar('bagian'),
+            'username' => $this->request->getVar('username'),
+            'password' => $this->request->getVar('password'),
+        ];
+
+        // Memasukkan data ke dalam tabel
+        $this->adminModel->insert($dataPegawai);
+
+        return redirect()->to('Pegawai/index');
+    }
 
     public function edit_admin($id)
     {

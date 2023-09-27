@@ -7,29 +7,28 @@ use App\Models\RekamModel;
 use App\Models\RiwayatModel;
 use App\Models\PelayananModel;
 use App\Models\ObatModel;
-use App\Models\PemeriksaModel;
 
 class Pegawai extends BaseController
 {
-    protected $rekamModel, $riwayatModel, $pelayananModel, $obatModel, $pemeriksaModel, $adminModel;
+    protected $rekamModel, $riwayatModel, $pelayananModel, $obatModel, $adminModel;
 
     public function __construct()
     {
+        if (session()->get('hak_akses') !== 'admin' &&  session()->get('hak_akses') !== 'pemeriksa') {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
         $this->rekamModel = new RekamModel();
         $this->riwayatModel = new RiwayatModel();
         $this->pelayananModel = new PelayananModel();
         $this->obatModel = new ObatModel();
-        $this->pemeriksaModel = new PemeriksaModel();
         $this->adminModel = new AdminModel();
     }
 
     public function index()
     {
-        $ambilPemeriksa = $this->pemeriksaModel->findAll();
         $ambilAdmin = $this->adminModel->findAll();
 
         $data = [
-            'data_pemeriksa' => $ambilPemeriksa,
             'data_admin' => $ambilAdmin,
         ];
 
@@ -61,7 +60,7 @@ class Pegawai extends BaseController
         return redirect()->to('Pegawai/index');
     }
 
-    public function edit_admin($id)
+    public function edit($id)
     {
         $data = [
             'title' => 'Detail Jalan',
@@ -71,24 +70,7 @@ class Pegawai extends BaseController
         return view('/pages/pegawai/edit', $data);
     }
 
-    public function edit_pemeriksa($id)
-    {
-        $data = [
-            'title' => 'Detail Jalan',
-            'data_pegawai' => $this->rekamModel->where(['id' => $id])->first(),
-        ];
-
-        return view('/pages/riwayat/index', $data);
-    }
-
-    public function hapus_pemeriksa($id)
-    {
-        $this->pemeriksaModel->where('id', $id)->delete();
-
-        return redirect()->to('Pegawai/index');
-    }
-
-    public function hapus_admin($id)
+    public function hapus($id)
     {
         $this->adminModel->where('id', $id)->delete();
 

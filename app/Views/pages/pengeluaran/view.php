@@ -11,7 +11,7 @@
         <!-- Card Body -->
         <div class="card-body">
             <div class="d-flex justify-content-end">
-                <a href="<?= base_url(); ?>Pengeluaran/add">
+                <a href="<?= base_url(); ?>Pengeluaran/tambah">
                     <button class="btn btn-danger">Tambah Pengeluaran +</button>
                 </a>
             </div>
@@ -36,8 +36,8 @@
                             <tr>
                                 <td scope="col"><?= $no; ?></td>
                                 <td scope="col"><?= $list['tanggal'] ?></td>
-                                <td scope="col"><?= $list['nama'] ?></td>
-                                <td scope="col"><?= $list['jumlah'] ?></td>
+                                <td scope="col"><?= $list['nama_pengeluaran'] ?></td>
+                                <td scope="col">Rp <?= number_format($list['jumlah'], 0, ',', '.'); ?></td>
                                 <td scope="col">
                                     <a title="lihat" href="<?= base_url(); ?>Pengeluaran/edit/<?= $list['id_pengeluaran']; ?>" style="display: inline;">
                                         <button class="btn btn-warning btn-sm">Edit</button>

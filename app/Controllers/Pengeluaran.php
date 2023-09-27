@@ -10,6 +10,9 @@ class Pengeluaran extends BaseController
 
     public function __construct()
     {
+        if (session()->get('hak_akses') !== 'admin' &&  session()->get('hak_akses') !== 'pemeriksa') {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
         $this->pengeluaranModel = new PengeluaranModel();
     }
 
@@ -24,7 +27,7 @@ class Pengeluaran extends BaseController
         return view('pages/pengeluaran/view', $data);
     }
 
-    public function add()
+    public function tambah()
     {
         $data = [
             'title' => "Dashboard",
@@ -33,11 +36,11 @@ class Pengeluaran extends BaseController
         return view('pages/pengeluaran/add', $data);
     }
 
-    public function process_add()
+    public function proses_tambah()
     {
         // Data yang akan diinsert ke dalam database
         $data = [
-            'nama' => $this->request->getVar('nama'),
+            'nama_pengeluaran' => $this->request->getVar('nama'),
             'jumlah' => $this->request->getVar('jumlah'),
             'tanggal' => $this->request->getVar('tanggal'),
             'keterangan' => $this->request->getVar('keterangan'),
@@ -60,11 +63,10 @@ class Pengeluaran extends BaseController
         return view('pages/pengeluaran/edit', $data);
     }
 
-    public function process_edit($id_pengeluaran)
+    public function proses_edit($id_pengeluaran)
     {
-
         $dataToUpdatePelayanan = [
-            'nama' => $this->request->getVar('nama'),
+            'nama_pengeluaran' => $this->request->getVar('nama'),
             'jumlah' => $this->request->getVar('jumlah'),
             'tanggal' => $this->request->getVar('tanggal'),
             'keterangan' => $this->request->getVar('keterangan'),

@@ -15,11 +15,12 @@
                     <button class="btn btn-danger">Tambah Obat +</button>
                 </a>
             </div>
-            <!-- <div class="d-flex justify-content-start">
-                <a href="export_kas.php" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm mt-1"><i class="fas fa-download fa-sm text-white-50"></i> Buat Laporan</a>
-            </div> -->
+            <div>
+                <br>
+                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+            </div>
             <div class="table-responsive service">
-                <table class="table table-bordered table-hover  mt-3 text-nowrap css-serial">
+                <table class="table table-bordered mt-3 text-nowrap css-serial">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
@@ -29,7 +30,7 @@
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="myTable">
                         <?php
                         $no = 1;
                         foreach ($data_obat as $list) : ?>
@@ -59,5 +60,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
 <?= $this->endSection('content'); ?>

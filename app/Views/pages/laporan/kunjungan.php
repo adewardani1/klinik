@@ -28,10 +28,10 @@
                         foreach ($data_kunjungan as $list) : ?>
                             <tr>
                                 <td scope="col"><?= $no; ?></td>
-                                <td scope="col"><?= $list['id_rm'] ?></td>
-                                <td scope="col"><?= $list['id_rm'] ?></td>
+                                <td scope="col"><?= $list['nama'] ?></td>
+                                <td scope="col"><?= $list['usia'] ?></td>
                                 <td scope="col"><?= $list['diagnosa'] ?></td>
-                                <td scope="col"><?= $list['id_obat'] ?></td>
+                                <td scope="col"><?= $list['obat'] ?></td>
                                 <td scope="col"><?= $list['biaya'] ?></td>
                             </tr>
                         <?php

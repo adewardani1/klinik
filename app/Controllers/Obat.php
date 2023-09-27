@@ -13,6 +13,9 @@ class Obat extends BaseController
 
     public function __construct()
     {
+        if (session()->get('hak_akses') !== 'admin' &&  session()->get('hak_akses') !== 'pemeriksa') {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
         $this->rekamModel = new RekamModel();
         $this->riwayatModel = new RiwayatModel();
         $this->pelayananModel = new PelayananModel();

@@ -15,9 +15,6 @@
                     <button class="btn btn-danger">Tambah Pengeluaran +</button>
                 </a>
             </div>
-            <!-- <div class="d-flex justify-content-start">
-                <a href="export_kas.php" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm mt-1"><i class="fas fa-download fa-sm text-white-50"></i> Buat Laporan</a>
-            </div> -->
             <div class="table-responsive service">
                 <table class="table table-bordered table-hover  mt-3 text-nowrap css-serial">
                     <thead>
@@ -28,12 +25,12 @@
                     </thead>
                     <tbody>
                         <tr class="text-center">
-                            <td scope="col"><?= $pemasukan; ?></td>
-                            <td scope="col"><?= $pengeluaran; ?></td>
+                            <td scope="col">Rp <?= number_format($pemasukan, 0, ',', '.'); ?></td>
+                            <td scope="col">Rp <?= number_format($pengeluaran, 0, ',', '.'); ?></td>
                         </tr>
                     </tbody>
                     <tr>
-                        <th scope="col" colspan="2">Total Keuntungan : <?= $keuntungan; ?></th>
+                        <th scope="col" colspan="2">Laba Bersih : Rp <?= number_format($keuntungan, 0, ',', '.'); ?></th>
                     </tr>
                 </table>
             </div>

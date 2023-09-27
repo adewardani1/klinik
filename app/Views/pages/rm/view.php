@@ -8,11 +8,10 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-info">Rekam Medis</h6>
         </div>
-
         <!-- Card Body -->
         <div class="card-body">
             <div class="d-flex justify-content-end">
-                <a href="<?= base_url(); ?>RekamMedis/add_rm">
+                <a href="<?= base_url(); ?>RekamMedis/tambah_rm">
                     <button class="btn btn-danger">Tambah Rekam Medis +</button>
                 </a>
             </div>
@@ -20,11 +19,8 @@
                 <br>
                 <input class="form-control" id="myInput" type="text" placeholder="Search..">
             </div>
-            <!-- <div class="d-flex justify-content-start">
-                <a href="export_kas.php" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm mt-1"><i class="fas fa-download fa-sm text-white-50"></i> Buat Laporan</a>
-            </div> -->
             <div class="table-responsive service">
-                <table class="table table-bordered  mt-3 text-nowrap css-serial">
+                <table class="table table-bordered mt-3 text-nowrap css-serial">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
@@ -46,7 +42,7 @@
                                 <td scope="col"><?= $list['alamat'] ?></td>
                                 <td scope="col"><?= $list['no_bpjs'] ?></td>
                                 <td scope="col">
-                                    <a title="edit" href="<?= base_url(); ?>Pelayanan/add_pelayanan/<?= $list['id_rm']; ?>" style="display: inline;">
+                                    <a title="edit" href="<?= base_url(); ?>Pelayanan/tambah_antrian/<?= $list['id_rm']; ?>" style="display: inline;">
                                         <button class="btn btn-primary btn-sm">Tambah</button>
                                     </a>
                                     <a title="lihat" href="<?= base_url(); ?>RekamMedis/riwayat/<?= $list['id_rm']; ?>" style="display: inline;">

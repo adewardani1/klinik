@@ -8,15 +8,15 @@
             <h6 class="m-0 font-weight-bold text-info">Catat Pengeluaran</h6>
         </div>
         <div class="card-body">
-            <form method="POST" action="<?= base_url(); ?>Pengeluaran/process_edit/<?= $detail_pengeluaran['id_pengeluaran']; ?>">
+            <form method="POST" action="<?= base_url(); ?>Pengeluaran/proses_edit/<?= $detail_pengeluaran['id_pengeluaran']; ?>">
                 <div class="row">
                     <div class="col-sm-4">
                         <label>Pengeluaran:</label>
-                        <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example" name='nama' value="<?= $detail_pengeluaran['nama']; ?>">
+                        <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example" name='nama' value="<?= $detail_pengeluaran['nama_pengeluaran']; ?>">
                     </div>
                     <div class="col-sm-4">
                         <label>Total:</label>
-                        <input class="form-control form-control-sm" type="number" placeholder="Harga" aria-label=".form-control-sm example" name='jumlah' value="<?= $detail_pengeluaran['jumlah']; ?>">
+                        <input class="form-control form-control-sm" type="number" placeholder="Jumlah" aria-label=".form-control-sm example" id="jumlah" name='jumlah' value="<?= $detail_pengeluaran['jumlah']; ?>">
                     </div>
                     <div class="col-sm-4">
                         <label>Tanggal Pengeluaran:</label>
@@ -33,5 +33,6 @@
         </div>
     </div>
 </div>
+
 
 <?= $this->endSection('content'); ?>

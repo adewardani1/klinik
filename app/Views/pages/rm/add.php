@@ -10,25 +10,49 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <!-- <div class="d-flex justify-content-start">
-                <a href="export_kas.php" class="d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm mt-1"><i class="fas fa-download fa-sm text-white-50"></i> Buat Laporan</a>
-            </div> -->
             <div class="table-responsive service">
-                <form method="POST" action="<?= base_url(); ?>RekamMedis/process_rm">
+                <form method="POST" action="<?= base_url(); ?>RekamMedis/proses_tambah_rm">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Nama</label>
-                        <input type="text" name="nama" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="exampleInputEmail1" class="form-label">Nama Pasien</label>
+                        <input type="text" name="nama" class="form-control" id="nama_pasien" required>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Alamat</label>
-                        <input type="text" name="alamat" class="form-control" id="exampleInputPassword1">
+                        <label for="exampleInputEmail1" class="form-label">Tanggal Lahir</label>
+                        <input class="form-control" type="date" aria-label=".form-control-sm example" name='tanggal_lahir' id="tanggal_lahir" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jenis_pasien" class="form-label">Jenis Pasien</label>
+                        <select class="form-control" id="jenis_pasien">
+                            <option value="non_bpjs">Non-BPJS</option>
+                            <option value="bpjs">BPJS</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="no_bpjs_input" style="display: none;">
+                        <label for="no_bpjs" class="form-label">NO BPJS</label>
+                        <input type="text" name="no_bpjs" class="form-control" id="no_bpjs">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                        <input type="text" name="alamat" class="form-control" id="alamat" required>
                     </div>
                     <button type="submit" class="btn btn-info">Tambah</button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('jenis_pasien').addEventListener('change', function() {
+        var jenis_pasien = this.value;
+        var no_bpjs_input = document.getElementById('no_bpjs_input');
+
+        if (jenis_pasien === 'bpjs') {
+            no_bpjs_input.style.display = 'block';
+        } else {
+            no_bpjs_input.style.display = 'none';
+        }
+    });
+</script>
 
 <?= $this->endSection('content'); ?>

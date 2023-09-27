@@ -16,6 +16,9 @@ class Dashboard extends BaseController
 
     public function __construct()
     {
+        if (session()->get('hak_akses') !== 'admin' &&  session()->get('hak_akses') !== 'pemeriksa') {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
         $this->rekamModel = new RekamModel();
         $this->riwayatModel = new RiwayatModel();
         $this->pelayananModel = new PelayananModel();
@@ -27,13 +30,18 @@ class Dashboard extends BaseController
 
     public function index()
     {
-
-        $ambilPasienHariIni =  $this->riwayatModel->ambilPasienHariIni();
-        $ambilPetugas = $this->adminModel->findAll();
+        $ambilPasienHariIni = $this->riwayatModel->ambilPasienHariIni();
+        $ambilPetugas = $this->adminModel->where('hak_akses !=', 'admin')->findAll();
         $ambilJadwal =  $this->jadwalModel->findAll();
 
+        // URL ke file .txt untuk menyimpan catatan 
+        $file_url = WRITEPATH . 'catatan.txt';
+
+        // Membaca isi file .txt
+        $catatan = file_get_contents($file_url);
+
         $data_jadwal = []; // Set nilai default berupa array kosong
-        // Ubah struktur data jadwal menjadi lebih sesuai dengan format yang dibutuhkan di view
+
         foreach ($ambilJadwal as $jadwal_item) {
             $data_jadwal[$jadwal_item['id_pegawai']][$jadwal_item['hari']] = $jadwal_item['jam'];
         }
@@ -61,9 +69,25 @@ class Dashboard extends BaseController
             'jadwal' => $data_jadwal,
             'jumlah_pasien' => $ambilPasienHariIni,
             'penghasilan' => $keuntungan,
+            'catatan' => $catatan,
         ];
 
         return view('dashboard', $data);
+    }
+
+    public function simpan_catatan()
+    {
+        $catatan = $this->request->getPost('catatan');
+        $file_path = WRITEPATH . 'catatan.txt';
+
+        // Menyimpan catatan ke dalam file .txt
+        $result = file_put_contents($file_path, $catatan);
+
+        if ($result !== false) {
+            return redirect()->to('Dashboard/index')->with('success', 'Catatan berhasil disimpan.');
+        } else {
+            return redirect()->to('Dashboard/index')->with('error', 'Gagal menyimpan catatan.');
+        }
     }
 
     public function simpan_jadwal()

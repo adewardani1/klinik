@@ -11,7 +11,6 @@
 
         <!-- Card Body -->
         <div class="card-body">
-
             <div class="row m-2">
                 <div class="col-md-6 border-0">
                     <div class="row mb-2">
@@ -77,9 +76,11 @@
         <!-- Card Body -->
         <div class="card-body">
             <div class="d-flex justify-content-end">
-                <a href="<?= base_url(); ?>RekamMedis/add_riwayat/<?= $detail_riwayat['id_rm']; ?>">
+                <a href="<?= base_url(); ?>RekamMedis/tambah_riwayat/<?= $detail_riwayat['id_rm']; ?>">
                     <button class="btn btn-danger">Tambah Riwayat Medis</button>
                 </a>
+                <!--  tombol atau tautan di tampilan riwayat pasien -->
+                <a href="<?= site_url('RekamMedis/cetakPdf/' . $detail_riwayat['id_rm']); ?>" target="_blank" class="btn btn-primary ml-2">Cetak PDF</a>
             </div>
             <div class="table-responsive service">
                 <table class="table table-bordered table-hover mt-3 text-nowrap css-serial">
@@ -88,6 +89,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Keluhan</th>
                             <th scope="col">Diagnosa</th>
+                            <th scope="col">Nama Pemeriksa</th>
                             <th scope="col">Obat</th>
                             <th scope="col">Keterangan</th>
                             <th scope="col">Aksi</th>
@@ -101,7 +103,8 @@
                                 <td scope="col"><?= $no ?></td>
                                 <td scope="col"><?= $list['keluhan'] ?></td>
                                 <td scope="col"><?= $list['diagnosa'] ?></td>
-                                <td scope="col"><?= $list['nama_obat'] ?></td>
+                                <td scope="col"><?= $list['nama_pemeriksa'] ?></td>
+                                <td scope="col"><?= $list['obat'] ?></td>
                                 <td scope="col"><?= $list['keterangan'] ?></td>
                                 <td scope="col">
                                     <form action="<?= base_url(); ?>RekamMedis/delete_riwayat/<?= $list['id_riwayat']; ?>" method="post" class="d-inline">

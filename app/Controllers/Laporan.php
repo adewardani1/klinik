@@ -13,6 +13,9 @@ class Laporan extends BaseController
 
     public function __construct()
     {
+        if (session()->get('hak_akses') !== 'admin' &&  session()->get('hak_akses') !== 'pemeriksa') {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
         $this->rekamModel = new RekamModel();
         $this->riwayatModel = new RiwayatModel();
         $this->pelayananModel = new PelayananModel();
@@ -22,12 +25,10 @@ class Laporan extends BaseController
     public function diagnosa()
     {
         $ambilRiwayat = $this->riwayatModel->findAll();
-
         $diagnosaCount = []; // Array untuk menghitung jumlah diagnosa
 
         foreach ($ambilRiwayat as $riwayat) {
             $diagnosa = strtolower($riwayat['diagnosa']); // Ubah ke huruf kecil
-
             if (isset($diagnosaCount[$diagnosa])) {
                 $diagnosaCount[$diagnosa]++;
             } else {
@@ -41,7 +42,6 @@ class Laporan extends BaseController
         // Ambil hanya 5 teratas
         $diagnosaCount = array_slice($diagnosaCount, 0, 5);
 
-
         $data = [
             'datarm' => $ambilRiwayat,
             'diagnosaCount' => $diagnosaCount,
@@ -52,18 +52,16 @@ class Laporan extends BaseController
 
     public function kunjungan()
     {
-        // Ambil tanggal hari ini
-        $today = date('Y-m-d ');
-        $startOfDay = $today . ' 00:00:00';
-        $endOfDay = $today . ' 23:59:59';
+        $ambilKunjungan = $this->riwayatModel->getKunjunganHariIni();
 
-        // Query untuk mengambil data kunjungan hari ini
-        $ambilKunjungan = $this->riwayatModel
-            ->where('created_at >=', $startOfDay)
-            ->where('created_at <=', $endOfDay)
-            ->findAll();
+        // Menghitung usia pasien berdasarkan tanggal lahir
+        foreach ($ambilKunjungan as &$kunjungan) {
+            $tanggalLahir = new \DateTime($kunjungan['tanggal_lahir']);
+            $today = new \DateTime();
+            $usia = $today->diff($tanggalLahir)->y;
+            $kunjungan['usia'] = $usia;
+        }
 
-        // Hitung jumlah pasien yang memiliki nomor BPJS
         $jumlahPasienBPJS = $this->riwayatModel->hitungJumlahPasienBPJS();
 
         $data = [
@@ -73,7 +71,6 @@ class Laporan extends BaseController
 
         return view('pages/laporan/kunjungan', $data);
     }
-
 
     public function keuangan()
     {

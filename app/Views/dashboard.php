@@ -3,12 +3,7 @@
 <?= $this->section('content'); ?>
 
 <div class="container-fluid px-4">
-    <!-- <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol> -->
-    <!-- Content Row -->
     <div class="row">
-
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
@@ -37,7 +32,7 @@
                                 Penghasilan
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                <h2><?= $penghasilan; ?></h2>
+                                <h2>Rp <?= number_format($penghasilan, 0, ',', '.'); ?></h2>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -57,17 +52,20 @@
                                 Catatan
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                <div class="form-group">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
+                                <form action="<?= base_url('Dashboard/simpan_catatan'); ?>" method="POST">
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="catatan" id="exampleFormControlTextarea1" rows="3"><?= $catatan; ?></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-warning">Simpan Catatan</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
 
     <div class="row">
         <div class="col-12">
@@ -95,7 +93,14 @@
                                         <td><?= $pegawai['nama']; ?></td>
                                         <?php for ($day = 1; $day <= 6; $day++) : ?>
                                             <td>
-                                                <select class="form-control" aria-label="Default select example" data-id="<?= $pegawai['id']; ?>" data-hari="<?= $day; ?>">
+                                                <?php
+                                                // Cek hak akses
+                                                $isAdmin = session('hak_akses') === 'admin';
+                                                $readonly = ($isAdmin) ? '' : 'readonly'; // Jika bukan admin atribut = readonly
+                                                $disabled = (!$isAdmin) ? 'disabled' : '';
+
+                                                ?>
+                                                <select class="form-control" aria-label="Default select example" data-id="<?= $pegawai['id']; ?>" data-hari="<?= $day; ?>" <?= $disabled; ?>>
                                                     <option value="0" <?= (isset($jadwal[$pegawai['id']][$day]) && $jadwal[$pegawai['id']][$day] == 0) ? 'selected' : ''; ?>>NO SHIFT</option>
                                                     <option value="1" <?= (isset($jadwal[$pegawai['id']][$day]) && $jadwal[$pegawai['id']][$day] == 1) ? 'selected' : ''; ?>>Reguler Office Hours (08.00 - 22.00)</option>
                                                     <option value="2" <?= (isset($jadwal[$pegawai['id']][$day]) && $jadwal[$pegawai['id']][$day] == 2) ? 'selected' : ''; ?>>Reguler Shift (06.00 - 08.00)</option>
@@ -139,6 +144,5 @@
             });
         });
     </script>
-
 
     <?= $this->endSection('content'); ?>
